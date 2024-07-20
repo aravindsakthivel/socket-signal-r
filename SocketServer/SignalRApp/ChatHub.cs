@@ -6,14 +6,21 @@ public class ChatHub : Hub<IChatClient>
 {
     public override async Task OnConnectedAsync()
     {
+        Console.WriteLine("Connected: " + Context.ConnectionId);
+        if (true)
+        {
+            Context.Abort();
+        }
+        Console.WriteLine("Connected: " + Context.ConnectionId);
         await Clients.All.ReceiveMessage($"{Context.ConnectionId} has joined");
     }
     
     public async Task SendMessage(string user, string message)
     {
         Console.WriteLine("Message received: " + message);
-        // await Clients.All.SendAsync("ReceiveMessage", user, message);
+        var cId = Context.ConnectionId;
         await Clients.All.ReceiveMessage($"{Context.ConnectionId}: {message}");
+        await Clients.Clients(cId).ReceiveMessage("message-dummy");
     }
     
     public override async Task OnDisconnectedAsync(Exception exception)

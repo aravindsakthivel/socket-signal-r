@@ -33,14 +33,14 @@ public class SignalServer
 
         App = builder.Build();
         
-        App.MapPost("broadcast", async (string message, IHubContext<ChatHub, IChatClient> context) =>
-        {
-            await context.Clients.All.ReceiveMessage($"Msg received in SignalR {message}");
-            
-            Console.WriteLine("Message received: " + message);
-
-            return Results.NoContent();
-        });
+        // App.MapPost("broadcast", async (string message, IHubContext<ChatHub, IChatClient> context) =>
+        // {
+        //     await context.Clients.All.ReceiveMessage($"Msg received in SignalR {message}");
+        //     
+        //     Console.WriteLine("Message received: " + message);
+        //
+        //     return Results.NoContent();
+        // });
         // App.UseHttpsRedirection();
 
         App.MapHub<ChatHub>("/chatHub");
